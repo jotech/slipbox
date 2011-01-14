@@ -66,18 +66,68 @@ slipbox::slipbox(char* inputfile){
                             if (found != string::npos){
                                 string_clean(s);
                                 
+                                //if keywords is a multiline
+                                size_t close = s.find("}");
+                                bool end = false;
+                                close = s.find("}");
+                                if (close == string::npos)
+                                    do{
+                                        string line;
+                                        if(source) getline(source, line, '\n');                        
+                                        close = line.find("}");
+                                        if(close != string::npos)
+                                            end = true;
+                                        // attention string_clean will remove '}' character 
+                                        // so it has to be proven before if '}' is in current line
+                                        string_clean(line); 
+                                        s.append(line);
+                                    }while(!end);
+                                    
+                                
                                 //keywords are seperated by '/' try to get them single
                                 size_t from, until;
                                 string key;
-                                from = s.find("/");
-                                while(from != string::npos){
+                                set<string> bibkeys;
+                                from = 0; 
+                                until = s.find("/");
+                                
+                                //if only one keyword is given
+                                if (until == string::npos){ 
+                                    if (keywords.find(s) != keywords.end())
+                                        keywords[s].insert(e.bibkey);
+                                    else{
+                                        bibkeys.insert(e.bibkey);
+                                        keywords.insert(pair <string, set<string> >(s, bibkeys));
+                                    }
+                                }
+                                else
+                                    end = false;
+                                    do{
+                                        if (until == string::npos){
+                                            end = true;
+                                            until = s.size();
+                                        }
+                                        key = s.substr(from, until - from); 
+                                        string_clean(key);
+                                        if (keywords.find(key) != keywords.end())
+                                            keywords[key].insert(e.bibkey);
+                                        else{
+                                            bibkeys.insert(e.bibkey);
+                                            keywords.insert(pair <string, set<string> >(key, bibkeys));
+                                        }
+                                        from = until + 1;
+                                        until = s.find("/", from);
+
+                                    }while (!end);
+                               /* 
+                                s.append("/ ", 0); //its just better working with this ;P
+                                while (from != string::npos){
                                     until = s.find("/", from + 1);
                                     if (until == string::npos)
                                         key = s.substr(from + 1, s.size() - from - 1);
                                     else key = s.substr(from + 1, until - from - 1);
                                     string_clean(key);
-                                    set<string> bibkeys;
-                                    if(keywords.find(key) != keywords.end())
+                                    if (keywords.find(key) != keywords.end())
                                         keywords[key].insert(e.bibkey);
                                     else{
                                         bibkeys.insert(e.bibkey);
@@ -85,7 +135,7 @@ slipbox::slipbox(char* inputfile){
                                     }
 
                                     from = until;
-                                }
+                                }*/
                             }
                         }
                     }
@@ -106,11 +156,13 @@ void slipbox::string_clean(string &s){
     bool cont = true;
     while(s.size() != 0 && cont){
         cont = false;
-        if(s[0] == ',' || s[0] == ' ' || s[0] == '{' || s[0] == '}') {
+        //remove characters from beginning
+        if(s[0] == ',' || s[0] == ' ' || s[0] == '{' || s[0] == '}' || s[0] == '\t') {
             s.erase(0, 1);
             cont = true;
         }
-        if(s[s.size() - 1] == ',' || s[s.size() - 1] == ' ' || s[s.size() - 1] == '{' || s[s.size() - 1] == '}') {
+        //remove characters from ending 
+        if(s[s.size() - 1] == ',' || s[s.size() - 1] == ' ' || s[s.size() - 1] == '{' || s[s.size() - 1] == '}' || s[s.size() - 1] == '\t') {
             s.erase(s.size() - 1, 1);
             cont = true;
         }
@@ -129,7 +181,7 @@ void slipbox::print_entries(){
 
 
 void slipbox::print_keywords(){
-    map<string, set<string> >::iterator it;
+    map<string, set<string>, InsensitiveCompare>::iterator it;
     set<string>::iterator it_str;
 
     cout << "print all keywords: " << keywords.size() << endl;
@@ -146,6 +198,6 @@ void slipbox::print_keywords(){
 int main(int argc, char *argv[]){
 
     slipbox sb(argv[1]);
-    sb.print_entries();
+    //sb.print_entries();
     sb.print_keywords();
 }

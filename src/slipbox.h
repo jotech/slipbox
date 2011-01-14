@@ -9,6 +9,8 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include "util.cc"
+    
 
 class slipbox{
     
@@ -19,7 +21,10 @@ class slipbox{
     void string_clean(std::string &s);
     void print_entries();
     void print_keywords();
-    
+   
+      
+
+
     typedef struct en
     {
         std::string author;
@@ -33,6 +38,6 @@ class slipbox{
     private:
 
     std::list<entry> entries;
-    std::map<std::string, std::set<std::string> > keywords;
+    std::map<std::string, std::set<std::string>, InsensitiveCompare> keywords;
 };
 #endif
