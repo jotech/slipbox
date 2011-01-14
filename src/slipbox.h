@@ -2,6 +2,8 @@
 #define SLIPBOX
 
 #include <list>
+#include <set>
+#include <map>
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -16,6 +18,7 @@ class slipbox{
 
     void string_clean(std::string &s);
     void print_entries();
+    void print_keywords();
     
     typedef struct en
     {
@@ -23,10 +26,13 @@ class slipbox{
         std::string title;
         std::string year;
         std::string publisher;
+        std::string bibkey;
+        std::string typ;
     }entry;
 
     private:
 
     std::list<entry> entries;
+    std::map<std::string, std::set<std::string> > keywords;
 };
 #endif

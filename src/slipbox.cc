@@ -22,33 +22,73 @@ slipbox::slipbox(char* inputfile){
             tmp.title = e.title;
             tmp.year = e.year;
             tmp.publisher = e.publisher;
+            tmp.bibkey = e.bibkey;
+            tmp.typ = e.typ;
             entries.push_back(tmp);
         }
 
-        found = s.find("title");
+        
+        found = s.find("@");
         if (found != string::npos){
             string_clean(s);
-            e.title = s;
+            size_t ter = s.find("{");
+            string t = s.substr(found + 1, ter - found - 1);
+            string k = s.substr(ter + 1, s.find(",") - ter - 1);
+            e.typ = t;
+            e.bibkey = k;
         }
         else{
-            found = s.find("author");
+            found = s.find("title");
             if (found != string::npos){
                 string_clean(s);
-                e.author = s;
+                e.title = s;
             }
             else{
-                found = s.find("publisher");
+                found = s.find("author");
                 if (found != string::npos){
                     string_clean(s);
-                    e.publisher = s;
+                    e.author = s;
                 }
                 else{
-                    found = s.find("year");
+                    found = s.find("publisher");
                     if (found != string::npos){
                         string_clean(s);
-                        e.year = s;
+                        e.publisher = s;
                     }
-                
+                    else{
+                        found = s.find("year");
+                        if (found != string::npos){
+                            string_clean(s);
+                            e.year = s;
+                        }
+                        else{
+                            found = s.find("keywords");
+                            if (found != string::npos){
+                                string_clean(s);
+                                
+                                //keywords are seperated by '/' try to get them single
+                                size_t from, until;
+                                string key;
+                                from = s.find("/");
+                                while(from != string::npos){
+                                    until = s.find("/", from + 1);
+                                    if (until == string::npos)
+                                        key = s.substr(from + 1, s.size() - from - 1);
+                                    else key = s.substr(from + 1, until - from - 1);
+                                    string_clean(key);
+                                    set<string> bibkeys;
+                                    if(keywords.find(key) != keywords.end())
+                                        keywords[key].insert(e.bibkey);
+                                    else{
+                                        bibkeys.insert(e.bibkey);
+                                        keywords.insert(pair <string, set<string> >(key, bibkeys));
+                                    }
+
+                                    from = until;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -83,12 +123,29 @@ void slipbox::print_entries(){
 
     cout << "print all entries: " << entries.size() << endl;
     for(it = entries.begin(); it != entries.end(); ++it){
-        cout << it->author << '\t' << it->title << '\t' << it->year << '\t' << it->publisher << endl;
+        cout << it->typ << '\t' << it->bibkey << '\t' << it->author << '\t' << it->title << '\t' << it->year << '\t' << it->publisher << endl;
     }
 }
+
+
+void slipbox::print_keywords(){
+    map<string, set<string> >::iterator it;
+    set<string>::iterator it_str;
+
+    cout << "print all keywords: " << keywords.size() << endl;
+    for(it = keywords.begin(); it != keywords.end(); ++it){
+        cout << it->first;
+        cout << " --> ";
+        for(it_str = it->second.begin(); it_str != it->second.end(); ++it_str)
+            cout << *it_str << " ";
+        cout << endl;
+    }
+}
+
 
 int main(int argc, char *argv[]){
 
     slipbox sb(argv[1]);
     sb.print_entries();
+    sb.print_keywords();
 }
