@@ -1,0 +1,97 @@
+#
+# README -- slipbox
+#
+
+1. General Description
+---
+
+Slipbox is an open source tool for bibliography 
+tasks and knowledge organization.
+
+It uses bibtex bibliographic data to collect books,
+articles etc. and is primarily concerned to offer
+efficient search possibilities, which sufficed 
+extensive demands.
+In order to provide this functions slipbox turns to
+account the 'keyword' entry of bibtex standard and
+extended it even to content, like quotes so that it
+is possible to establish a quote database, from 
+which you can cite a corresponding argument into 
+your current text.
+Furthermore slipbox broadens the reference service
+by bibtex to connect different entries with each other
+so that you can get a graph, which shows you your
+bibliographic content in a interconnected network.
+
+
+
+2. Some more features and more detailed view
+---
+
+
+- Slipbox do not want to replace jabref 
+  (http://jabref.sourceforge.net/)
+  
+  * Additional to jabref it extends search possibilities
+    and knowledge representation features.
+
+  * It is not a fork or update of jabref because slipbox
+    consists of several small ideas, which should be implemented
+    separately first without gui in c++ to keep complexity down.
+
+
+- Extensive search mask for bibtex entries and indexing
+  
+  * Keywords listing
+  
+  * Search bibtex database according specified fields (e. g. author, 
+    title ...)
+
+  * By paying attention to keywords and indexing slipbox captures a
+    concept by Niklas Luhmann, who explains importance of labeling
+    entries with keywords for chance discovery.
+
+        @article{luhmann1993,
+        title={{Kommunikation mit Zettelkaesten. Ein Erfahrungsbericht}},
+        author={Luhmann, N.},
+        journal={Universitaet als Milieu, Haux, Bielefeld},
+        pages={53-61},
+        year={1993}
+        }
+
+
+- Integration of quotes into bibtex
+
+  * Bibtex entries (articles, books ...) gets extension to represent quotes
+    from texts. Each quote receives properties:
+    - title
+    - description
+    - quote text
+    - page
+    - keywords
+
+  * Each quote belongs to a specific bibtex entry but could be seen as
+    additional textual data that is findable and could be cite from 
+    external office programs.
+
+
+- Interconnectedness of data
+
+  * By working with books, articles ... a network between entries arises, 
+    when entries and ideas are connected. Each bibtex entry and also each 
+    quote should be marked as linked to another.
+
+  * The entry interconnectedness network can be plotted as a graph of nodes
+    and edges which represent bibtex entries and their connections.
+
+  * Network output could drawn as an image.
+
+
+- Expansion of other software (secondary tasks)
+
+  * Latex
+    - Cite quotes directly with page number and content
+
+  * jabref 
+    - enabling advanced search
+    - quoting bibtex support
