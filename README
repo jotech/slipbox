@@ -70,25 +70,21 @@ bibliometric data mining.
     (required fields: author/editor, title, chapter/pages, publisher, year),
     which is used by slipbox for quoting.
 
-  * Bibtex entries (articles, books ...) get extension(s) to represent quotes
-    from texts. Each quote receives properties:
-    - title
-    - description
-    - quote text
-    - page
-    - keywords
-
-  * Each quote belongs to a specific bibtex entry but could be seen as
-    additional textual data that is findable and could be cited from 
-    external office programs.
+  * The required fields of an inbook entry can be get by cross-referencing to
+    the book or article from which it is a part. Furthermore inbook gets some 
+    additional data entries:
+    - quotetitle    (summary of text)
+    - quotedescr    (more detailed synopsis)
+    - quotetext     (text to quote)
+    - keywords      (keys for a latter search)
 
   * It is not necessary to specify 'quotetext' because inbook entry type
     could be used normally as argument or text block. 
     But the important idea is to collect inbook quotes or arguments, which
     have at least title and keywords to answer typically questions while
     writing:
-    i)  Where is an argument mentioned?
-    ii) What important arguments belong to a book? 
+    i)  Where can I find a source for an argument?
+    ii) What important arguments correspondent to a book? 
     Slipbox tries to help answering by expanded search possibilities and 
     lucid listing of quotetitles in connection to its referred entry type.
   
