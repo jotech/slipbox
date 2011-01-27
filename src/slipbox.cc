@@ -119,23 +119,6 @@ slipbox::slipbox(char* inputfile){
                                         until = s.find("/", from);
 
                                     }while (!end);
-                               /* 
-                                s.append("/ ", 0); //its just better working with this ;P
-                                while (from != string::npos){
-                                    until = s.find("/", from + 1);
-                                    if (until == string::npos)
-                                        key = s.substr(from + 1, s.size() - from - 1);
-                                    else key = s.substr(from + 1, until - from - 1);
-                                    string_clean(key);
-                                    if (keywords.find(key) != keywords.end())
-                                        keywords[key].insert(e.bibkey);
-                                    else{
-                                        bibkeys.insert(e.bibkey);
-                                        keywords.insert(pair <string, set<string> >(key, bibkeys));
-                                    }
-
-                                    from = until;
-                                }*/
                             }
                         }
                     }
