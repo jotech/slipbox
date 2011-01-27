@@ -22,14 +22,15 @@ Furthermore slipbox broadens the reference service
 by bibtex to connect different entries with each other
 so that you can get a graph, which shows you your
 bibliographic content in a interconnected network.
-
+Finally some statistical functions make use of
+bibliometric data mining.
 
 
 2. Some more features and more detailed view
 ---
 
 
-- Slipbox does not want to replace jabref 
+2.1 Slipbox does not want to replace jabref 
   (http://jabref.sourceforge.net/)
   
   * Additional to jabref it extends search possibilities
@@ -43,7 +44,7 @@ bibliographic content in a interconnected network.
     or less space / execution time.
 
 
-- Extensive search mask for bibtex entries and indexing
+2.2 Extensive search mask for bibtex entries and indexing
   
   * Keywords listing
   
@@ -63,7 +64,11 @@ bibliographic content in a interconnected network.
         }
 
 
-- Integration of quotes into bibtex
+2.3 Integration of quotes/arguments into bibtex
+
+  * Bibtex possess an entry type called inbook
+    (required fields: author/editor, title, chapter/pages, publisher, year),
+    which is used by slipbox for quoting.
 
   * Bibtex entries (articles, books ...) get extension(s) to represent quotes
     from texts. Each quote receives properties:
@@ -77,12 +82,37 @@ bibliographic content in a interconnected network.
     additional textual data that is findable and could be cited from 
     external office programs.
 
+  * It is not necessary to specify 'quotetext' because inbook entry type
+    could be used normally as argument or text block. 
+    But the important idea is to collect inbook quotes or arguments, which
+    have at least title and keywords to answer typically questions while
+    writing:
+    i)  Where is an argument mentioned?
+    ii) What important arguments belong to a book? 
+    Slipbox tries to help answering by expanded search possibilities and 
+    lucid listing of quotetitles in connection to its referred entry type.
+  
+  * Quotes could be cite from external office programs with or without quoted 
+    text.
 
-- Interconnectedness of data
+
+2.4 Interconnectedness of data
 
   * By working with books, articles ... a network between entries arises, 
-    when entries and ideas are connected. Each bibtex entry and also each 
-    quote should be marked as linked to another.
+    when entries and ideas are connected. Each bibtex entry and especially 
+    each quote should be marked as linked to another.
+  
+  * Bibtex has an data entry called 'crossref' containing key of a
+    cross-referenced entry. In this way it is possible to fill up entries
+    with data from other. But the idea connectedness is to show relations.
+    For that reason a new data entry is introduced:
+    - connect   (bibtex keys to connect to)
+
+  * Some networks of interest could be:
+    - All connections between entry types.
+    - Beginning with book, which data is connected to it? 
+    - Starting from keyword, where is it mentioned?
+    - List connections of a quote/argument.
 
   * The entry interconnectedness network can be plotted as a graph of nodes
     and edges which represent bibtex entries and their connections.
@@ -90,7 +120,18 @@ bibliographic content in a interconnected network.
   * Network could be drawn as an image (using GraphViz or similar).
 
 
-- Expansion of other software (secondary tasks)
+2.5 Statistical features
+
+  * Bibliometrics offers citation and content analysis to make some qualitative
+    investigations into your bibliography.
+  
+  * Data mining tries to find patterns in huge databases.
+
+  * An easy application is to plot distribution of books and articles over time,
+    to look for instance after publications peaks or vacancies.
+
+
+2.x Expansion of other software (secondary tasks)
 
   * Latex
     - Cite quotes directly with page number and content
